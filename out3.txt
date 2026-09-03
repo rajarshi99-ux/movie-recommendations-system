@@ -1,0 +1,42 @@
+﻿Loading movies.csv...
+Loading links.csv...
+Loading ratings.csv...
+Mapping...
+
+==================================================
+PHASE 3 / PART A: DATASET TIMESTAMP SCOPE
+==================================================
+1. Minimum timestamp/date: 789652004 (1995-01-09 17:16:44)
+2. Maximum timestamp/date: 1427784002 (2015-03-31 12:10:02)
+3. Number of unique users after TMDB mapping: 138,493
+4. Number of mapped movie interactions: 19,966,480
+5. Number of interactions removed because TMDB mapping is unavailable: 33,783
+6. Number of users remaining after mapping: 138,493
+7. Number of users with at least 5 mapped ratings: 138,493
+8. Number of users with at least 10 mapped ratings: 138,493
+
+==================================================
+PHASE 3 / PART B: TEMPORAL LEAKAGE-FREE SPLITTING
+==================================================
+Proposing Split Strategy: Temporal Fractional Segmentation
+- Eligible: Users with >= 20 mapped ratings (to ensure adequate training context + val/test resolution).
+- Rule: Sort sequentially by timestamp per user.
+- Sub-rule: Oldest 80% assigned to TRAIN, next 10% to VALIDATION, newest 10% strictly to FINAL TEST.
+Identified 138,292 strictly eligible users for meaningful splits.
+Subsetting 15,000 deterministic users for real-time memory scaling (Seed: 42).
+
+VERIFYING ZERO-LEAKAGE INTERSECTION PROTOCOL:
+TRAIN Γê⌐ VALIDATION = empty (Found elements: 0) -> True
+TRAIN Γê⌐ TEST = empty (Found elements: 0) -> True
+VALIDATION Γê⌐ TEST = empty (Found elements: 0) -> True
+
+VERIFYING CHRONOLOGICAL INTEGRITY:
+Check passed: max(train_timestamp) <= min(validation_timestamp) across all valid users -> True
+Check passed: max(validation_timestamp) <= min(test_timestamp) across all valid users -> True
+
+SAMPLE TARGET SPLITS (First 5 users):
+User [96249]: Total: 42 -> Train=33, Val=4, Test=5
+User [13565]: Total: 760 -> Train=608, Val=76, Test=76
+User [111513]: Total: 48 -> Train=38, Val=5, Test=5
+User [76742]: Total: 74 -> Train=59, Val=7, Test=8
+User [38845]: Total: 117 -> Train=93, Val=12, Test=12

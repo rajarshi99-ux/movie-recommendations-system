@@ -1,0 +1,136 @@
+
+========================================================================
+  A. LOADING MovieRecommender
+========================================================================
+
+   MovieRecommender(movies=45,171, features=20,000, load_time=1.87s)
+   Model loading time : 1.867s
+   Total movies       : 45,171
+   TF-IDF features    : 20,000
+
+========================================================================
+  B. RECOMMEND  ->  'Toy Story'  (n=10)
+========================================================================
+
+   Input movie details:
+     Title    : Toy Story
+     Genres   : Animation Comedy Family
+     Rating   : 7.7 / 10  (5415 votes)
+     Released : 1995-10-30
+     Overview :
+              Led by Woody, Andy's toys live happily in his room
+until Andy's birthday brings Buzz Lightyear onto the scene.
+Afraid of losing his place in Andy's heart, Woody plots against
+Buzz. But when circumstances separate Buzz and Woody from their
+owner, the duo eventually learns to put aside their differences.
+
+   Recommendations:
+
+   Rank Title                                Genres                      Sim  Rating     Votes
+   ------------------------------------------------------------------------
+   1    Toy Story 3                          Animation Family Co~     0.4326     7.6     4,710
+   2    Toy Story 2                          Animation Comedy Fa~     0.3946     7.3     3,914
+   3    Superstar Goofy                      Animation Comedy Fa~     0.2195     4.8         4
+   4    Small Fry                            Animation Family         0.2171     6.8       118
+   5    Hot Splash                           N/A                      0.1926     4.0         1
+   6    The 40 Year Old Virgin               Comedy Romance           0.1705     6.2     2,020
+   7    Ozzie                                N/A                      0.1631     5.0         2
+   8    Free Birds                           Animation Comedy Fa~     0.1595     5.7       259
+   9    Justice League: War                  Animation                0.1551     7.0       234
+   10   The Wild                             Family Animation         0.1525     5.1       246
+
+   Query execution time : 0.0417s  (10 recommendations)
+   Dense N x N matrix   : NOT CREATED (brute cosine on sparse CSR)
+
+========================================================================
+  C. RECOMMEND  ->  'The Dark Knight'  (n=5)
+========================================================================
+
+   Rank Title                                Genres                      Sim
+   ------------------------------------------------------------------------
+   1    The Dark Knight Rises                Action Crime Drama ~     0.2643
+   2    Batman Forever                       Action Crime Fantasy     0.2306
+   3    Batman                               Fantasy Action           0.2278
+   4    Ricochet                             Action Crime Thrill~     0.2183
+   5    İtirazım Var                         Drama Action Crime       0.2099
+
+   Query time : 0.0291s
+
+========================================================================
+  D. SEARCH  ->  search_movies('toy', limit=10)
+========================================================================
+
+   Title                               Genres                   Rating Released
+   ------------------------------------------------------------------------
+   Toy Story                           Animation Comedy Fa~        7.7 1995-10-30
+   Babes in Toyland                    Fantasy Science Fic~        5.8 1961-12-14
+   Toys                                Fantasy Comedy Scie~        5.0 1992-12-18
+   Babes in Toyland                    Comedy                      6.6 1934-12-14
+   Toy Story 2                         Animation Comedy Fa~        7.3 1999-10-30
+   The Toy                             Comedy Family               5.7 1982-12-10
+   Toy Soldiers                        Action Adventure Th~        6.2 1991-04-24
+   Giants and Toys                     Comedy                      5.8 1958-06-22
+   Puppet Master vs Demonic Toys       Horror                      2.7 2004-12-18
+   Toy Story 3                         Animation Family Co~        7.6 2010-06-16
+
+   Search time : 0.3915s  (10 results)
+
+========================================================================
+  E. INVALID TITLE TEST  ->  'This Movie Does Not Exist 12345'
+========================================================================
+
+   [PASS] Error handled gracefully without crash.
+   Error   : Movie not found
+   Message : No movie titled 'This Movie Does Not Exist 12345' exists in the dataset. Try search_movies() to find similar titles.
+
+========================================================================
+  F. INVALID n TEST  ->  recommend('Toy Story', n=0)
+========================================================================
+
+   [PASS] ValueError raised correctly:
+          n must be an integer between 1 and 50, got: 0
+
+========================================================================
+  F2. INVALID n TEST  ->  recommend('Toy Story', n=200)
+========================================================================
+
+   [PASS] ValueError raised correctly:
+          n must be an integer between 1 and 50, got: 200
+
+========================================================================
+  G. DUPLICATE TITLE TEST  ->  search for common titles
+========================================================================
+
+   Found 2341 titles that appear more than once.
+   Testing with: 'Heat'
+   [PASS] Duplicate title handled; returned 5 results.
+     1. The Lodger (sim=0.2866)
+     2. Running Out of Time 2 (sim=0.2647)
+     3. A House In The Hills (sim=0.2307)
+     4. The Wall (sim=0.2289)
+     5. All Things To All Men (sim=0.2108)
+
+========================================================================
+  H. get_movie_details('Inception')
+========================================================================
+
+   title          : Inception
+   genres         : Action Thriller Science Fiction Mystery Adventure
+   vote_average   : 8.1
+   vote_count     : 14075.0
+   popularity     : 29.108149
+   release_date   : 2010-07-14
+   imdb_id        : tt1375666
+   overview       : Cobb, a skilled thief who commits corporate espionage by [...]
+
+========================================================================
+  I. PERFORMANCE SUMMARY
+========================================================================
+
+   Model load time      : 1.867s
+   Recommendation time  : < 0.1s per query (on 45,171 movies)
+   Dense matrix created : NO
+   Memory strategy      : sparse CSR NearestNeighbors, O(N*F) not O(N^2)
+
+   All tests completed.
+

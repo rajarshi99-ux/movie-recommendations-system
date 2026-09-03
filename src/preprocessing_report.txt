@@ -1,0 +1,91 @@
+======================================================================
+  MOVIE RECOMMENDATION SYSTEM - PREPROCESSING REPORT
+  Generated  : 2026-08-31
+  Source file: C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\movies.csv
+  Output file: C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\dataset\movies_cleaned.csv
+======================================================================
+
+----------------------------------------------------------------------
+ ROW COUNTS
+----------------------------------------------------------------------
+  Original row count                          : 45,466
+  Rows removed - exact duplicates             : 17
+  Rows removed - duplicate movie IDs          : 13
+  Rows removed - both genres & overview empty : 259
+  Rows removed - no valid title               : 6
+  Final row count                             : 45,171
+  Total rows removed                          : 295
+
+----------------------------------------------------------------------
+ DUPLICATE ID HANDLING (DETAIL)
+----------------------------------------------------------------------
+  When two or more rows shared the same TMDB movie id, each row was
+  scored based on how much textual content it contained:
+    * overview present    -> +2 points
+    * genres present      -> +2 points
+    * title present       -> +1 point
+    * tagline present     -> +1 point
+
+  The row with the highest score was retained; in case of a tie the
+  earlier-appearing row was kept.  This ensures the richest data is
+  preserved without blindly dropping movies that share a title.
+
+  Duplicate IDs handled this way: 13
+
+----------------------------------------------------------------------
+ COLUMNS USED FOR RECOMMENDATION (feature text)
+----------------------------------------------------------------------
+  genres    - Parsed from JSON-like list; plain genre names only
+  overview  - Plot synopsis; cleaned and whitespace-normalised
+  tags      - Combined feature: genres + overview  (model input)
+
+----------------------------------------------------------------------
+ COLUMNS RETAINED AS METADATA (not used in model text)
+----------------------------------------------------------------------
+  id, imdb_id, title, original_title, original_language,
+  release_date, popularity, vote_average, vote_count,
+  poster_path, runtime, tagline
+
+----------------------------------------------------------------------
+ COLUMNS EXPLICITLY EXCLUDED
+----------------------------------------------------------------------
+  belongs_to_collection, homepage, budget, revenue,
+  adult, video, status, production_companies,
+  production_countries, spoken_languages
+
+----------------------------------------------------------------------
+ MISSING VALUES IN CLEANED DATASET
+----------------------------------------------------------------------
+  id                               0  (0.00%)
+  imdb_id                         17  (0.04%)
+  title                            0  (0.00%)
+  original_title                   0  (0.00%)
+  original_language               11  (0.02%)
+  release_date                    74  (0.16%)
+  popularity                       0  (0.00%)
+  vote_average                     0  (0.00%)
+  vote_count                       0  (0.00%)
+  poster_path                    364  (0.81%)
+  runtime                        179  (0.40%)
+  tagline                     24,771  (54.84%)
+  genres                           0  (0.00%)
+  overview                         0  (0.00%)
+  tags                             0  (0.00%)
+
+----------------------------------------------------------------------
+ DATA TYPE CONVERSIONS APPLIED
+----------------------------------------------------------------------
+  popularity    -> float64   (invalid -> NaN via coercion)
+  vote_average  -> float64   (invalid -> NaN via coercion)
+  vote_count    -> float64   (invalid -> NaN via coercion)
+  release_date  -> datetime64 (invalid -> NaT via coercion)
+
+----------------------------------------------------------------------
+ OUTPUT
+----------------------------------------------------------------------
+  movies_cleaned.csv rows    : 45,171
+  movies_cleaned.csv columns : 15
+
+======================================================================
+ END OF REPORT
+======================================================================

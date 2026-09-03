@@ -1,0 +1,32 @@
+{
+    "model_name": "Adaptive Semantic Metaheuristic Recommendation (ASMR)",
+    "feature_names": [
+        "semantic",
+        "genre",
+        "rating",
+        "popularity",
+        "franchise"
+    ],
+    "optimized_weights": [
+        0.04161256147430172,
+        0.38473243352042225,
+        0.015934312163779853,
+        0.36736736861699393,
+        0.19035332422450219
+    ],
+    "seed": 42,
+    "optimizer_configuration": {
+        "strategy": "best1bin",
+        "popsize": 15,
+        "maxiter": 40,
+        "bounds": [
+            0,
+            1
+        ]
+    },
+    "training_objective": "NDCG@5",
+    "timestamp": 1788199708.685492,
+    "train_score": 0.9677222263570858,
+    "validation_score": 0.971136343037939,
+    "runtime_sec": 6.231341123580933
+}

@@ -1,0 +1,20 @@
+Title: Inception
+Local poster_path: /qmDpIHrmpJINaRKAfWQfftjCdyi.jpg
+Generated URL: https://image.tmdb.org/t/p/w500/qmDpIHrmpJINaRKAfWQfftjCdyi.jpg
+HTTP: 404 Content-Type: text/html
+----------------------------------------
+Title: Minority Report
+Local poster_path: /h3lpltSn7Rj1eYTPQO1lYGdw4Bz.jpg
+Generated URL: https://image.tmdb.org/t/p/w500/h3lpltSn7Rj1eYTPQO1lYGdw4Bz.jpg
+HTTP: 404 Content-Type: text/html
+----------------------------------------
+Title: The Dark Knight
+Local poster_path: /1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg
+Generated URL: https://image.tmdb.org/t/p/w500/1hRoyzDtpgMU7Dz4JF22RANzQO7.jpg
+HTTP: 200 Content-Type: image/jpeg
+----------------------------------------
+Title: Toy Story
+Local poster_path: /rhIRbceoE9lR4veEXuwCC2wARtG.jpg
+Generated URL: https://image.tmdb.org/t/p/w500/rhIRbceoE9lR4veEXuwCC2wARtG.jpg
+HTTP: 404 Content-Type: text/html
+----------------------------------------

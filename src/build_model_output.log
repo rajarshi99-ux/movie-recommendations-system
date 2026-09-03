@@ -1,0 +1,119 @@
+
+======================================================================
+  1. LOADING CLEANED DATASET
+======================================================================
+   Loaded : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\dataset\movies_cleaned.csv
+   Shape  : 45,171 rows x 15 columns
+
+======================================================================
+  2. PREPARING 'TAGS' TEXT COLUMN
+======================================================================
+   Tags normalised (lowercase, whitespace cleaned).
+   Rows with empty tags after cleaning : 0
+   Movies available for modelling      : 45,171
+
+======================================================================
+  3. TF-IDF VECTORISATION
+======================================================================
+   Configuration:
+     stop_words      : english
+     ngram_range     : (1, 2)
+     min_df          : 2
+     max_features    : 20000
+     sublinear_tf    : True
+
+   Results:
+   Number of movies          : 45,171
+   Number of TF-IDF features : 20,000
+   Sparse matrix shape       : 45171 x 20000
+   Non-zero elements         : 1,351,575
+   Matrix density            : 0.1496%
+   Sparse matrix memory      : 15.64 MB
+   Dense equivalent would be : 6.73 GB
+   Vectorisation time        : 5.89s
+
+======================================================================
+  4. BUILDING NEARESTNEIGHBORS MODEL
+======================================================================
+   Configuration:
+     metric       : cosine
+     algorithm    : brute
+     n_neighbors  : 11
+
+   NearestNeighbors fitted successfully.
+   Fit time : 0.00s
+
+   Design note:
+     algorithm='brute'  computes distances on-the-fly at query time.
+     No N x N similarity matrix is ever computed or held in memory.
+     Memory peak = O(N * F) for the sparse matrix, NOT O(N^2).
+     A full dense cosine matrix would require ~15.20 GB.
+     The sparse approach uses only 15.64 MB.
+
+======================================================================
+  5. BUILDING MOVIE METADATA
+======================================================================
+   Metadata columns   : id, title, genres, overview, popularity, vote_average, vote_count, release_date, poster_path, imdb_id
+   Metadata shape     : 45,171 rows x 10 columns
+
+======================================================================
+  6. SAVING ARTEFACTS TO models/
+======================================================================
+   Saved tfidf_vectorizer.pkl  (750.70 KB)
+   Saved movie_neighbors.pkl   (15.64 MB)
+   Saved movie_metadata.pkl    (18.74 MB)
+
+======================================================================
+  7. FILE VERIFICATION
+======================================================================
+   [PASS] models/tfidf_vectorizer.pkl  (750.70 KB)
+   [PASS] models/movie_neighbors.pkl  (15.64 MB)
+   [PASS] models/movie_metadata.pkl  (18.74 MB)
+
+   All files present : YES
+
+======================================================================
+  8. SANITY TEST - NEAREST NEIGHBOR LOOKUP
+======================================================================
+
+   Input movie : Toy Story (dataset index 0)
+
+   Query time : 0.0270s
+
+   Recommended movies:
+   #    Title                                         Genres                 Vote Avg Cos Dist
+   -----------------------------------------------------------------------------------------------
+   1    Toy Story 3                                   Animation Family C          7.6   0.5674
+   2    Toy Story 2                                   Animation Comedy F          7.3   0.6054
+   3    Superstar Goofy                               Animation Comedy F          4.8   0.7805
+   4    Small Fry                                     Animation Family            6.8   0.7829
+   5    Hot Splash                                    nan                         4.0   0.8074
+   6    The 40 Year Old Virgin                        Comedy Romance              6.2   0.8295
+   7    Ozzie                                         nan                         5.0   0.8369
+   8    Free Birds                                    Animation Comedy F          5.7   0.8405
+   9    Justice League: War                           Animation                   7.0   0.8449
+   10   The Wild                                      Family Animation            5.1   0.8475
+
+======================================================================
+  9. WRITING MODEL REPORT
+======================================================================
+   Report saved : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\src\model_report.txt
+
+======================================================================
+  BUILD COMPLETE - SUMMARY
+======================================================================
+   Movies used         : 45,171
+   TF-IDF features     : 20,000
+   Matrix shape        : 45,171 x 20,000
+   Matrix is sparse    : YES (CSR format, density 0.1496%)
+   Dense matrix built  : NO  (never computed or stored)
+   Dense would be      : 6.73 GB
+   Sparse uses only    : 15.64 MB
+
+   Saved artefacts:
+     C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\models\tfidf_vectorizer.pkl
+     C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\models\movie_neighbors.pkl
+     C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\models\movie_metadata.pkl
+
+   Ready for Step 4 -> Recommendation engine + Streamlit app.
+

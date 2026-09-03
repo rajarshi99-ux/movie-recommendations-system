@@ -1,0 +1,200 @@
+
+======================================================================
+  1. LOADING DATASET
+======================================================================
+   File  : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\movies.csv
+   Size  : 32.85 MB
+   Status: Loaded successfully [OK]
+
+======================================================================
+  2. DATASET SHAPE (rows x columns)
+======================================================================
+   Rows    : 45,466
+   Columns : 24
+
+======================================================================
+  3. ALL COLUMN NAMES
+======================================================================
+     1. adult
+     2. belongs_to_collection
+     3. budget
+     4. genres
+     5. homepage
+     6. id
+     7. imdb_id
+     8. original_language
+     9. original_title
+    10. overview
+    11. popularity
+    12. poster_path
+    13. production_companies
+    14. production_countries
+    15. release_date
+    16. revenue
+    17. runtime
+    18. spoken_languages
+    19. status
+    20. tagline
+    21. title
+    22. video
+    23. vote_average
+    24. vote_count
+
+======================================================================
+  4. DATA TYPES PER COLUMN
+======================================================================
+   Column                              Dtype
+   ----------------------------------- ---------------
+   adult                               str
+   belongs_to_collection               str
+   budget                              str
+   genres                              str
+   homepage                            str
+   id                                  str
+   imdb_id                             str
+   original_language                   str
+   original_title                      str
+   overview                            str
+   popularity                          str
+   poster_path                         str
+   production_companies                str
+   production_countries                str
+   release_date                        str
+   revenue                             float64
+   runtime                             float64
+   spoken_languages                    str
+   status                              str
+   tagline                             str
+   title                               str
+   video                               object
+   vote_average                        float64
+   vote_count                          float64
+
+======================================================================
+  5. MISSING VALUES
+======================================================================
+   Column                               Missing Count  Missing %
+   ----------------------------------- -------------- ----------
+   belongs_to_collection                       40,972     90.12%  <- HIGH
+   homepage                                    37,684     82.88%  <- HIGH
+   tagline                                     25,054     55.10%  <- HIGH
+   overview                                       954      2.10%
+   poster_path                                    386      0.85%
+   runtime                                        263      0.58%
+   status                                          87      0.19%
+   release_date                                    87      0.19%
+   imdb_id                                         17      0.04%
+   original_language                               11      0.02%
+   production_companies                             3      0.01%
+   spoken_languages                                 6      0.01%
+   title                                            6      0.01%
+   revenue                                          6      0.01%
+   production_countries                             3      0.01%
+   popularity                                       5      0.01%
+   vote_average                                     6      0.01%
+   video                                            6      0.01%
+   vote_count                                       6      0.01%
+
+   Columns with zero missing values : 5 / 24
+
+======================================================================
+  6. DUPLICATE ROWS
+======================================================================
+   Exact duplicate rows : 17
+   Duplicate movie IDs  : 30
+   Rows sharing a title : 5,519  (includes remakes / different releases)
+
+======================================================================
+  7. 5 SAMPLE RECORDS  (transposed for readability)
+======================================================================
+                                                                                                                                                                                          43526                                                                                                                                                                                                                                                                                                                                                            6383                                                                                                                                                                          3154                                                                                                  10146                                                                                                                                                                                                                                                                                                                                                9531 
+adult                                                                                                                                                                                     False                                                                                                                                                                                                                                                                                                                                                            False                                                                                                                                                                         False                                                                                                 False                                                                                                                                                                                                                                                                                                                                                False
+belongs_to_collection                                                                                                                                                                       NaN                                                                                                                                                                                                                                                                                                                                                              NaN                                                                                                                                                                           NaN                                                                                                   NaN                                                                                                                                                                                                                                                                                                                                                  NaN
+budget                                                                                                                                                                                        0                                                                                                                                                                                                                                                                                                                                                                0                                                                                                                                                                       1000000                                                                                                     0                                                                                                                                                                                                                                                                                                                                                    0
+genres                                                                 [{'id': 18, 'name': 'Drama'}, {'id': 35, 'name': 'Comedy'}, {'id': 53, 'name': 'Thriller'}, {'id': 80, 'name': 'Crime'}]                                                                                                                                                                                                                                                                                                      [{'id': 18, 'name': 'Drama'}, {'id': 35, 'name': 'Comedy'}]                                                                                                                    [{'id': 80, 'name': 'Crime'}, {'id': 18, 'name': 'Drama'}]        [{'id': 27, 'name': 'Horror'}, {'id': 10749, 'name': 'Romance'}, {'id': 35, 'name': 'Comedy'}]                                                                                                                                                                                                                                                          [{'id': 35, 'name': 'Comedy'}, {'id': 18, 'name': 'Drama'}, {'id': 53, 'name': 'Thriller'}]
+homepage                                                                                                                                                 https://www.netflix.com/title/80164212                                                                                                                                                                                                                                                                                                                                                              NaN                                                                                                                                                                           NaN                                                                                                   NaN                                                                                                                                                                                                                                                                                                                                                  NaN
+id                                                                                                                                                                                       411405                                                                                                                                                                                                                                                                                                                                                            42492                                                                                                                                                                         12143                                                                                                  9976                                                                                                                                                                                                                                                                                                                                                46761
+imdb_id                                                                                                                                                                               tt5717492                                                                                                                                                                                                                                                                                                                                                        tt0069449                                                                                                                                                                     tt0103759                                                                                             tt0380687                                                                                                                                                                                                                                                                                                                                            tt0157044
+original_language                                                                                                                                                                            en                                                                                                                                                                                                                                                                                                                                                               en                                                                                                                                                                            en                                                                                                    en                                                                                                                                                                                                                                                                                                                                                   fr
+original_title                                                                                                                                                                     Small Crimes                                                                                                                                                                                                                                                                                                                                                   Up the Sandbox                                                                                                                                                                Bad Lieutenant                                                                                 Satan's Little Helper                                                                                                                                                                                                                                                                                                                                               Sitcom
+overview               A disgraced former cop, fresh off a six-year prison sentence for attempted murder - returns home looking for redemption but winds up trapped in the mess he left behind.  A young wife and mother, bored with day-to-day life in New York City and neglected by her husband, slips into increasingly outrageous fantasies: her mother breaking into the apartment, an explorer's demonstration of tribal fertility music at a party causing strange transformations, and joining terrorists to plant explosives in the Statue of Liberty.  While investigating a young nun's rape, a corrupt New York City police detective, with a serious drug and gambling addiction, tries to change his ways and find forgiveness.                                    A naïve young boy unknowingly becomes the pawn of a serial killer.  The adventures of an upper-class suburban family abruptly confronted with the younger brother's discovery of his homosexuality, the elder sister's suicide attempt and sado-masochist tendencies, and the intrusion of a very free-spirited maid and her husband... And it all started with the arrival in the family of an innocent looking rat...
+popularity                                                                                                                                                                             7.219022                                                                                                                                                                                                                                                                                                                                                          0.13845                                                                                                                                                                      6.417037                                                                                              2.233189                                                                                                                                                                                                                                                                                                                                             1.800582
+poster_path                                                                                                                                                    /z7jmLmrs0pLlDU4GI6ItaJeqlET.jpg                                                                                                                                                                                                                                                                                                                                 /zwOmdqvPObv9EsMgne7EBYzPYGW.jpg                                                                                                                                              /oe8VjWCKXktqA19T1ZWtaSn8rc2.jpg                                                                      /59HgSvjDiaqUSYz43VZnpChgBkp.jpg                                                                                                                                                                                                                                                                                                                     /fZqanl6sCC29zU1K2v2mpuWyyYw.jpg
+production_companies                                                                                                                        [{'name': 'Rooks Nest Entertainment', 'id': 34456}]                                                                                                                                                                                                                                                                                   [{'name': 'Barwood Films', 'id': 3645}, {'name': 'First Artists', 'id': 4376}]                                                                                                                                [{'name': 'Bad Lt. Productions', 'id': 11264}]  [{'name': 'Intrinsic Value Films', 'id': 2828}, {'name': "Satan's Little Company LLC", 'id': 60626}]                                                                                                                                                                                                                                                                                                        [{'name': 'Fidélité Productions', 'id': 147}]
+production_countries                                                                         [{'iso_3166_1': 'CA', 'name': 'Canada'}, {'iso_3166_1': 'US', 'name': 'United States of America'}]                                                                                                                                                                                                                                                                                                       [{'iso_3166_1': 'US', 'name': 'United States of America'}]                                                                                                                    [{'iso_3166_1': 'US', 'name': 'United States of America'}]                                            [{'iso_3166_1': 'US', 'name': 'United States of America'}]                                                                                                                                                                                                                                                                                                             [{'iso_3166_1': 'FR', 'name': 'France'}]
+release_date                                                                                                                                                                         2017-04-28                                                                                                                                                                                                                                                                                                                                                       1972-12-21                                                                                                                                                                    1992-09-16                                                                                            2004-01-01                                                                                                                                                                                                                                                                                                                                           1998-05-27
+revenue                                                                                                                                                                                     0.0                                                                                                                                                                                                                                                                                                                                                              0.0                                                                                                                                                                     2019469.0                                                                                                   0.0                                                                                                                                                                                                                                                                                                                                                  0.0
+runtime                                                                                                                                                                                    95.0                                                                                                                                                                                                                                                                                                                                                             97.0                                                                                                                                                                          96.0                                                                                                 100.0                                                                                                                                                                                                                                                                                                                                                 80.0
+spoken_languages                                                                                               [{'iso_639_1': 'en', 'name': 'English'}, {'iso_639_1': 'es', 'name': 'Español'}]                                                                                                                                                                                                                                                                                                                         [{'iso_639_1': 'en', 'name': 'English'}]                                                                                              [{'iso_639_1': 'en', 'name': 'English'}, {'iso_639_1': 'es', 'name': 'Español'}]                     [{'iso_639_1': 'it', 'name': 'Italiano'}, {'iso_639_1': 'de', 'name': 'Deutsch'}]                                                                                                                                                                                                                                                                                                            [{'iso_639_1': 'fr', 'name': 'Français'}]
+status                                                                                                                                                                                 Released                                                                                                                                                                                                                                                                                                                                                         Released                                                                                                                                                                      Released                                                                                              Released                                                                                                                                                                                                                                                                                                                                             Released
+tagline                                                                                                                                                                                     NaN                                                                                                                                                                                                                                                                                                                                                              NaN                                                                                                                                          Gambler. Thief. Junkie. Killer. Cop.                                                                             You'll laugh 'til you die                                                                                                                                                                                                                                                                                                                                                  NaN
+title                                                                                                                                                                              Small Crimes                                                                                                                                                                                                                                                                                                                                                   Up the Sandbox                                                                                                                                                                Bad Lieutenant                                                                                 Satan's Little Helper                                                                                                                                                                                                                                                                                                                                               Sitcom
+video                                                                                                                                                                                     False                                                                                                                                                                                                                                                                                                                                                            False                                                                                                                                                                         False                                                                                                 False                                                                                                                                                                                                                                                                                                                                                False
+vote_average                                                                                                                                                                                5.8                                                                                                                                                                                                                                                                                                                                                              7.3                                                                                                                                                                           6.9                                                                                                   5.0                                                                                                                                                                                                                                                                                                                                                  6.4
+vote_count                                                                                                                                                                                 55.0                                                                                                                                                                                                                                                                                                                                                              2.0                                                                                                                                                                         162.0                                                                                                  42.0                                                                                                                                                                                                                                                                                                                                                 27.0
+
+======================================================================
+  8. COLUMN USEFULNESS AUDIT FOR RECOMMENDATION SYSTEM
+======================================================================
+
+   Column                        Missing %   Description
+   ---------------------------- ----------   ----------------------------------------
+   title                              0.0%  [[OK]] Movie name - mandatory for display & lookup
+   genres                             0.0%  [[OK]] Genre tags - key content signal
+   overview                           2.1%  [[OK]] Plot synopsis - rich text for TF-IDF / embeddings
+   vote_average                       0.0%  [[OK]] User rating - quality filter & score weighting
+   vote_count                         0.0%  [[OK]] Number of votes - confidence / popularity weight
+   popularity                         0.0%  [[OK]] TMDB popularity score - trend signal
+   release_date                       0.2%  [[OK]] Release year / era - temporal filtering
+   poster_path                        0.8%  [[OK]] Poster image URL - UI display
+   id                                 0.0%  [[OK]] Unique movie identifier
+   tagline                           55.1%  [[!! HIGH MISS]] Short marketing phrase - supplementary text
+   runtime                            0.6%  [[OK]] Film duration - preference filtering
+   original_language                  0.0%  [[OK]] Language - diversity / language filter
+   production_companies               0.0%  [[OK]] Studio - additional content signal
+   spoken_languages                   0.0%  [[OK]] Language info
+   adult                              0.0%  [[OK]] Adult content flag - safety filter
+   status                             0.2%  [[OK]] Released / Rumored etc - quality filter
+
+   Columns NOT present in this dataset: ['cast', 'crew', 'keywords']
+
+======================================================================
+  9. RECOMMENDED COLUMNS FOR FIRST RECOMMENDATION MODEL
+======================================================================
+
+   CONTENT-BASED FILTERING MODEL  (Phase 1)
+   -----------------------------------------
+   Primary Feature Columns (build the 'tags' corpus):
+     * title          - display & search index
+     * genres         - strongest content signal
+     * overview       - TF-IDF / sentence-embedding source
+     * keywords       - curated content descriptors (if present)
+     * cast / crew    - top-3 actors + director (if present)
+
+   Metadata / Filtering Columns:
+     * vote_average   - weight / rank results; filter low-quality
+     * vote_count     - minimum vote threshold (e.g. > 50 votes)
+     * popularity     - tie-breaking / trending boost
+     * release_date   - year extraction for era filtering
+     * poster_path    - Streamlit UI image display
+
+   Columns to SKIP in Phase 1:
+     * adult, status, spoken_languages, production_companies
+       (low signal or high missing rate)
+     * Any column with > 70 % missing values
+
+   Suggested Pipeline:
+     1. Drop rows where BOTH overview AND genres are null
+     2. Fill remaining nulls with empty strings
+     3. Combine genres + overview + keywords + cast + director
+        into a single 'tags' text column
+     4. TF-IDF vectorise 'tags'  (max_features=10,000)
+     5. Cosine similarity matrix  ->  top-N nearest neighbours
+
+
+======================================================================
+  ANALYSIS COMPLETE
+======================================================================
+   Dataset has 45,466 movies across 24 columns.
+   Script finished without modifying the source file.
+

@@ -1,0 +1,16 @@
+.env
+
+# Virtual environments
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.pyc
+
+# Large datasets and models
+movielens/
+dataset/
+*.npy
+movies.csv
+log9*.txt

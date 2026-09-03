@@ -1,0 +1,50 @@
+﻿==================================================
+1. BEFORE REDESIGN: TIMESTAMP TIE AUDIT
+==================================================
+Total eligible users: 15,000
+Number of users with TRAIN/VAL timestamp-boundary ties: 3723
+Number of users with VAL/TEST timestamp-boundary ties: 3422
+Total unique affected users: 5190
+Total affected interactions (for those users): 540376
+Percentage of users affected: 34.60%
+
+SAMPLE TIES (10 concrete examples):
+UserId: 65538 | Timestamp: 869024060 | Interactions in group: 2 | Original Assignment: {'train': 1, 'val': 1}
+UserId: 114691 | Timestamp: 850465688 | Interactions in group: 3 | Original Assignment: {'train': 2, 'val': 1}
+UserId: 3 | Timestamp: 945176005 | Interactions in group: 4 | Original Assignment: {'test': 3, 'val': 1}
+UserId: 114693 | Timestamp: 857999873 | Interactions in group: 5 | Original Assignment: {'test': 4, 'val': 1}
+UserId: 114693 | Timestamp: 857999519 | Interactions in group: 6 | Original Assignment: {'train': 4, 'val': 2}
+UserId: 5 | Timestamp: 851617633 | Interactions in group: 2 | Original Assignment: {'val': 1, 'test': 1}
+UserId: 16393 | Timestamp: 858872460 | Interactions in group: 3 | Original Assignment: {'test': 2, 'val': 1}
+UserId: 81930 | Timestamp: 992921309 | Interactions in group: 3 | Original Assignment: {'val': 2, 'train': 1}
+UserId: 114700 | Timestamp: 978475528 | Interactions in group: 3 | Original Assignment: {'val': 2, 'train': 1}
+UserId: 114700 | Timestamp: 978475608 | Interactions in group: 6 | Original Assignment: {'test': 5, 'val': 1}
+UserId: 81932 | Timestamp: 830768787 | Interactions in group: 5 | Original Assignment: {'val': 4, 'test': 1}
+UserId: 114703 | Timestamp: 1111551192 | Interactions in group: 3 | Original Assignment: {'val': 2, 'test': 1}
+
+==================================================
+2. AFTER REDESIGN: PRESERVING TIMESTAMP GROUPS
+==================================================
+VERIFYING PARTITION ISOLATION:
+TRAIN AND VALIDATION = empty: True
+TRAIN AND TEST = empty: True
+VALIDATION AND TEST = empty: True
+max(train_timestamp) < min(validation_timestamp): True
+max(validation_timestamp) < min(test_timestamp): True
+
+==================================================
+3. FINAL REDESIGNED COUNTS
+==================================================
+Final train interactions: 1,717,292
+Final validation interactions: 214,883
+Final test interactions: 214,588
+Number of users with all three partitions: 14,581
+Minimum train interactions per user: 14
+Minimum validation interactions per user: 1
+Minimum test interactions per user: 1
+Maximum train/val/test train interactions per user: 2989
+Maximum train/val/test validation interactions per user: 373
+Maximum train/val/test test interactions per user: 374
+Median counts for Train: 57.0
+Median counts for Val: 7.0
+Median counts for Test: 7.0

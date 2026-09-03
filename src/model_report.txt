@@ -1,0 +1,71 @@
+======================================================================
+  MOVIE RECOMMENDATION SYSTEM - MODEL REPORT
+  Generated : 2026-08-31
+======================================================================
+
+----------------------------------------------------------------------
+ DATASET
+----------------------------------------------------------------------
+  Source          : dataset/movies_cleaned.csv
+  Number of movies: 45,171
+  Text feature    : 'tags' column (genres + overview, lowercased)
+
+----------------------------------------------------------------------
+ TF-IDF CONFIGURATION
+----------------------------------------------------------------------
+  stop_words  : english
+  ngram_range : (1, 2)   -- unigrams and bigrams
+  min_df      : 2        -- ignore terms in fewer than 2 documents
+  max_features: 20,000   -- vocabulary capped for memory efficiency
+  sublinear_tf: True     -- apply log(1+tf) to dampen term frequency
+
+  Number of features generated : 20,000
+  TF-IDF matrix shape          : 45,171 x 20,000
+  Non-zero elements             : 1,351,575
+  Matrix density                : 0.1496%
+  Sparse matrix memory          : 15.64 MB
+  Dense equivalent memory       : 6.73 GB
+
+----------------------------------------------------------------------
+ WHY SPARSE REPRESENTATION
+----------------------------------------------------------------------
+  Most movies share very few of the 20,000 vocabulary terms.
+  Storing only non-zero values (CSR format) cuts memory from
+  6.73 GB (dense float64) down to 15.64 MB.
+  The TF-IDF matrix is 441x more memory-efficient in
+  sparse form.
+
+----------------------------------------------------------------------
+ WHY NO FULL COSINE SIMILARITY MATRIX
+----------------------------------------------------------------------
+  A full N x N float64 similarity matrix for 45,171 movies
+  would require approximately 15.20 GB, which is
+  infeasible for most laptops and unnecessary.
+
+  Instead, NearestNeighbors (brute-force, cosine metric) computes
+  distances only at query time for a single input vector.
+  Memory cost is O(N * F) for the sparse index, NOT O(N^2).
+
+----------------------------------------------------------------------
+ NEARESTNEIGHBORS CONFIGURATION
+----------------------------------------------------------------------
+  metric      : cosine
+  algorithm   : brute  -- exact, no approximation; works on sparse
+  n_neighbors : 11     -- 11 retrieved; self-match dropped -> 10 recs
+
+----------------------------------------------------------------------
+ SAVED MODEL FILES
+----------------------------------------------------------------------
+  models/tfidf_vectorizer.pkl  -- fitted TfidfVectorizer (750.70 KB)
+  models/movie_neighbors.pkl   -- fitted NearestNeighbors (15.64 MB)
+  models/movie_metadata.pkl    -- DataFrame with movie metadata (18.74 MB)
+
+----------------------------------------------------------------------
+ METADATA COLUMNS PRESERVED
+----------------------------------------------------------------------
+  id, title, genres, overview, popularity,
+  vote_average, vote_count, release_date, poster_path, imdb_id
+
+======================================================================
+ END OF REPORT
+======================================================================

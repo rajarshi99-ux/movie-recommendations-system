@@ -1,0 +1,173 @@
+
+======================================================================
+  1. LOADING RAW DATA
+======================================================================
+   Source : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\movies.csv
+   Rows   : 45,466
+   Cols   : 24
+
+======================================================================
+  2. REMOVING EXACT DUPLICATE ROWS
+======================================================================
+   Exact duplicates removed : 17
+   Rows remaining           : 45,449
+
+======================================================================
+  3. HANDLING DUPLICATE MOVIE IDs
+======================================================================
+   Duplicate IDs removed (kept best record) : 13
+   Rows remaining                            : 45,436
+
+   Strategy: For each duplicate id, the row with the most text
+   content (overview + genres + title + tagline) was retained.
+   Rows with equal scores kept the earlier original row.
+
+======================================================================
+  4. REMOVING ROWS WITH NO CONTENT
+======================================================================
+   Rows with both genres AND overview missing : 259
+   Rows with no valid title                   : 6
+   Rows remaining                             : 45,171
+
+======================================================================
+  5. PARSING GENRES COLUMN
+======================================================================
+   Genre parsing complete.
+   Sample parsed values:
+     - Animation Comedy Family
+     - Adventure Fantasy Family
+     - Romance Comedy
+
+======================================================================
+  6. CLEANING OVERVIEW
+======================================================================
+   Overview cleaned (whitespace normalised, NaN -> empty string).
+
+======================================================================
+  7. CLEANING TITLE
+======================================================================
+   Title cleaned (leading/trailing whitespace removed).
+
+======================================================================
+  8. BUILDING 'TAGS' COLUMN
+======================================================================
+   'tags' column created.
+   Rows with non-empty tags : 45,171 / 45,171
+
+======================================================================
+  9. NUMERIC & DATE CONVERSIONS
+======================================================================
+   popularity   -> float64  (invalid values coerced to NaN)
+   vote_average -> float64
+   vote_count   -> float64
+   release_date -> datetime64 (invalid values coerced to NaT)
+   NaN popularity  : 0
+   NaN vote_average: 0
+   NaN vote_count  : 0
+   NaT release_date: 74
+
+======================================================================
+  10. SELECTING FINAL COLUMNS
+======================================================================
+   Metadata columns : id, imdb_id, title, original_title, original_language, release_date, popularity, vote_average, vote_count, poster_path, runtime, tagline
+   Feature columns  : genres, overview, tags
+   Total columns    : 15
+
+======================================================================
+  11. SAVING CLEANED DATASET
+======================================================================
+   Saved : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\dataset\movies_cleaned.csv
+   Rows  : 45,171
+   Cols  : 15
+
+======================================================================
+  12. VERIFICATION
+======================================================================
+
+   [PASS] movies_cleaned.csv created
+   [PASS] 'tags' column present
+   [PASS] 'title' column present
+   [PASS] genres parsed (no JSON ids)
+   [PASS] No row has both empty genres & overview
+   [PASS] Original movies.csv untouched
+
+   All verification checks PASSED.
+
+======================================================================
+  13. SAMPLE CLEANED RECORDS (5 rows)
+======================================================================
+
+  --- Record #24980 ---
+  Title   : Alien Nation: Body and Soul
+  Genres  : TV Movie Science Fiction
+  Overview: Sikes and Francisco are called in to a case when a mysterious young girl, who looks part Newcomer, part human, appears. ...
+  Tags    : TV Movie Science Fiction Sikes and Francisco are called in to a case when a mysterious young girl, who looks part Newcom...
+
+  --- Record #7450 ---
+  Title   : Cypher
+  Genres  : Thriller Science Fiction Mystery
+  Overview: An unsuspecting, disenchanted man finds himself working as a spy in the dangerous, high-stakes world of corporate espion...
+  Tags    : Thriller Science Fiction Mystery An unsuspecting, disenchanted man finds himself working as a spy in the dangerous, high...
+
+  --- Record #35485 ---
+  Title   : Windbag the Sailor
+  Genres  : Comedy
+  Overview: Will Hay plays a bragging sea captain whose maritime experience actually extends to navigating a coal barge down inland ...
+  Tags    : Comedy Will Hay plays a bragging sea captain whose maritime experience actually extends to navigating a coal barge down ...
+
+  --- Record #604 ---
+  Title   : The Pallbearer
+  Genres  : Comedy Romance
+  Overview: Aspiring architect Tom Thompson is told by mysterious Ruth Abernathy that his best friend, "Bill," has taken his own lif...
+  Tags    : Comedy Romance Aspiring architect Tom Thompson is told by mysterious Ruth Abernathy that his best friend, "Bill," has ta...
+
+  --- Record #8345 ---
+  Title   : The Merry Widow
+  Genres  : Comedy Drama Music Romance
+  Overview: A prince from a small kingdom courts a wealthy widow to keep her money in the country.
+  Tags    : Comedy Drama Music Romance A prince from a small kingdom courts a wealthy widow to keep her money in the country.
+
+======================================================================
+  14. MISSING VALUES IN CLEANED DATASET
+======================================================================
+   Column                         Missing  Missing %
+   ------------------------- ------------ ----------
+   id                                   0      0.00%
+   imdb_id                             17      0.04%
+   title                                0      0.00%
+   original_title                       0      0.00%
+   original_language                   11      0.02%
+   release_date                        74      0.16%
+   popularity                           0      0.00%
+   vote_average                         0      0.00%
+   vote_count                           0      0.00%
+   poster_path                        364      0.81%
+   runtime                            179      0.40%
+   tagline                         24,771     54.84%
+   genres                               0      0.00%
+   overview                             0      0.00%
+   tags                                 0      0.00%
+
+======================================================================
+  15. WRITING PREPROCESSING REPORT
+======================================================================
+   Report saved : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\src\preprocessing_report.txt
+
+======================================================================
+  PREPROCESSING COMPLETE - SUMMARY
+======================================================================
+   Original rows : 45,466
+   Final rows    : 45,171
+   Rows removed  : 295
+
+   Breakdown of removed rows:
+     Exact duplicates             : 17
+     Duplicate IDs (kept best)    : 13
+     Both genre+overview missing  : 259
+     No valid title               : 6
+
+   Output : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\dataset\movies_cleaned.csv
+   Report : C:\Users\RAJARSHI\OneDrive\Desktop\Movie-Recommendation-System\src\preprocessing_report.txt
+
+   Ready for Step 3 -> TF-IDF vectorisation.
+

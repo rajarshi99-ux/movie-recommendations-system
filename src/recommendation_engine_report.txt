@@ -1,0 +1,163 @@
+======================================================================
+  MOVIE RECOMMENDATION SYSTEM - RECOMMENDATION ENGINE REPORT
+  Generated : 2026-08-31
+======================================================================
+
+----------------------------------------------------------------------
+ OVERVIEW
+----------------------------------------------------------------------
+  src/recommendation_engine.py implements the MovieRecommender class,
+  which provides content-based movie recommendations by reusing the
+  three model artefacts produced in Step 3 (build_model.py).
+
+  The engine never recomputes TF-IDF vectors, never builds a cosine
+  similarity matrix, and never constructs any dense N x N array.
+
+----------------------------------------------------------------------
+ HOW THE RECOMMENDATION ENGINE WORKS
+----------------------------------------------------------------------
+  1. At construction time (MovieRecommender.__init__) the three
+     artefacts are loaded from disk once:
+       - tfidf_vectorizer.pkl  ->  sklearn TfidfVectorizer
+       - movie_neighbors.pkl   ->  sklearn NearestNeighbors
+       - movie_metadata.pkl    ->  pandas DataFrame (45,171 x 10)
+
+  2. A fast title-to-row-index lookup dictionary (_title_index) is
+     built from the metadata in O(N) time and reused across queries.
+
+  3. At query time (recommend(movie_title, n)):
+       a. The input title is normalised (lowercase, stripped).
+       b. The pre-built _title_index maps the title to a row index.
+       c. The sparse TF-IDF row stored inside the NearestNeighbors
+          model (_fit_X[row_index]) is extracted in O(1) time.
+       d. nn_model.kneighbors(query_vector, n_neighbors=n+10) is
+          called. sklearn's brute-force cosine algorithm computes
+          the distance between the query row and every row in the
+          stored sparse matrix WITHOUT materialising the full matrix.
+       e. The returned (distances, indices) arrays are filtered:
+          - the query movie itself is removed
+          - any other row with the same normalised title is removed
+       f. The top n results are returned as a list of dicts with
+          similarity_score = 1 - cosine_distance.
+
+----------------------------------------------------------------------
+ HOW TF-IDF IS REUSED
+----------------------------------------------------------------------
+  The TfidfVectorizer is loaded but NOT called during a query.
+  The sparse TF-IDF matrix (45,171 x 20,000 CSR) was embedded inside
+  the NearestNeighbors object when it was fitted in Step 3.
+  Accessing nn_model._fit_X[i] retrieves the pre-computed vector for
+  movie i without any re-vectorisation.
+
+  The vectorizer object is retained so that future features such as
+  vectorising a freeform user text query are possible without
+  rebuilding the model.
+
+----------------------------------------------------------------------
+ HOW NEARESTNEIGHBORS IS REUSED
+----------------------------------------------------------------------
+  NearestNeighbors(metric='cosine', algorithm='brute') works on
+  sparse input.  When kneighbors() is called with a single query
+  vector, sklearn computes the cosine distance between that vector
+  and every training vector in _fit_X using vectorised sparse BLAS
+  operations.  Only the k smallest distances are returned; no O(N^2)
+  expansion occurs.
+
+  Fit time was 0 s because 'brute' does no index pre-computation;
+  all work is deferred to query time, keeping memory near O(N * F).
+
+----------------------------------------------------------------------
+ COSINE SIMILARITY FROM COSINE DISTANCE
+----------------------------------------------------------------------
+  sklearn's cosine metric returns cosine DISTANCE, defined as:
+
+      cosine_distance  = 1 - cosine_similarity
+
+  The engine reverses this:
+
+      similarity_score = 1 - cosine_distance
+
+  Range: 1.0 = identical vectors, 0.0 = completely orthogonal.
+
+  This is equivalent to the standard dot-product cosine similarity
+  between normalised TF-IDF unit vectors.
+
+----------------------------------------------------------------------
+ DUPLICATE TITLE HANDLING
+----------------------------------------------------------------------
+  Some titles appear more than once in the dataset (remakes, TV films,
+  etc.).  When recommend() or get_movie_details() receives such a
+  title, _resolve_title() selects the "best" candidate by maximising:
+
+      score = vote_count * vote_average
+
+  This composite score favours movies that are both highly rated AND
+  widely reviewed, reliably picking the canonical theatrical release
+  over an obscure entry with the same name.
+
+  No exception is raised; the caller always receives a result.
+
+  Additionally, during result filtering, any neighbour that shares the
+  exact normalised title of the query movie is skipped, preventing
+  different database entries for "the same" film from appearing as
+  recommendations of each other.
+
+----------------------------------------------------------------------
+ UNKNOWN TITLE HANDLING
+----------------------------------------------------------------------
+  When a title is not found in _title_index, recommend() and
+  get_movie_details() return a dict containing:
+
+      { "error": "Movie not found",
+        "message": "No movie titled '...' exists ..." }
+
+  No exception propagates to the caller, making the engine safe to
+  embed in a web application without a try/except wrapper.
+
+  Users can call search_movies(query) to find partial title matches
+  before calling recommend().
+
+----------------------------------------------------------------------
+ INVALID n HANDLING
+----------------------------------------------------------------------
+  If n < 1 or n > 50, recommend() raises a ValueError with a clear
+  message.  The range 1-50 is a practical limit for a UI; the corpus
+  technically supports higher values.
+
+----------------------------------------------------------------------
+ WHY THIS APPROACH IS MEMORY EFFICIENT
+----------------------------------------------------------------------
+  Approach           Memory cost
+  -----------------  ------------------------------------
+  Dense TF-IDF       45,171 x 20,000 x 8 bytes  = 6.73 GB   [avoided]
+  Dense cosine sim   45,171 x 45,171 x 8 bytes  = 15.20 GB  [avoided]
+  Sparse TF-IDF CSR  ~15.64 MB                               [actual]
+
+  The sparse CSR format stores only the 1,351,575 non-zero values
+  (0.15 % density) rather than all 903,420,000 cells.
+
+  Each query touches at most one sparse row (~few KB) and produces
+  a distance vector of length 45,171 floats (< 1 MB) which is
+  immediately discarded after the top-k are extracted.
+
+----------------------------------------------------------------------
+ PUBLIC API SUMMARY
+----------------------------------------------------------------------
+  MovieRecommender()
+      Constructor.  Loads all artefacts once.
+
+  .recommend(movie_title, n=10) -> list[dict]
+      Top-n content-based recommendations.
+
+  .search_movies(query, limit=10) -> list[dict]
+      Partial case-insensitive title search.
+
+  .get_movie_details(movie_title) -> dict
+      Full metadata for one movie.
+
+  .movie_count -> int
+  .feature_count -> int
+
+======================================================================
+ END OF REPORT
+======================================================================

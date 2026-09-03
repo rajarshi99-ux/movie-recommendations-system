@@ -1,0 +1,13 @@
+﻿Loading movies.csv...
+Loading movielens/ratings.csv...
+Loading movielens/links.csv...
+
+--- AUDIT RESULTS ---
+Number of MovieLens ratings: 20,000,263
+Number of unique MovieLens users: 138,493
+Number of unique MovieLens movies with ratings: 26,744
+Number of valid TMDB IDs in links: 26,501
+Number of duplicate TMDB mappings: 18
+Number of successfully matched TMDB IDs with movies.csv: 26,375
+Number of unmatched TMDB IDs: 108
+Final mapping percentage: 99.59%

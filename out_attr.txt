@@ -1,0 +1,63 @@
+﻿Loading movies and links...
+Loading ratings.csv...
+==================================================
+PHASE 3 FINAL ATTRITION AUDIT
+==================================================
+Total evaluated users: 15000
+Retained valid users: 14581
+Excluded users: 419
+Attrition Rate: 2.793333%
+
+--- Statistics for Excluded Users (419) ---
+Total mapped ratings: 12,364
+Median ratings per user: 26.0
+Mean ratings per user: 29.5
+Minimum ratings per user: 20
+Maximum ratings per user: 97
+Total unique timestamps: 3,104
+Median unique timestamps per user: 7.0
+Mean unique timestamps per user: 7.4
+Median % of ratings in largest TS group: 24.00%
+Mean % of ratings in largest TS group: 30.90%
+
+* Attrition Bias Markers *
+Mean Rating Score: 3.667
+Mean Rating Variance: 1.047
+Median Temporal Span (seconds): 335
+
+
+--- Statistics for Retained Users (14,581) ---
+Total mapped ratings: 2,134,399
+Median ratings per user: 71.0
+Mean ratings per user: 146.4
+Minimum ratings per user: 20
+Maximum ratings per user: 3736
+Total unique timestamps: 1,677,939
+Median unique timestamps per user: 47.0
+Mean unique timestamps per user: 115.1
+Median % of ratings in largest TS group: 3.57%
+Mean % of ratings in largest TS group: 5.62%
+
+* Attrition Bias Markers *
+Mean Rating Score: 3.619
+Mean Rating Variance: 0.972
+Median Temporal Span (seconds): 3,751
+
+
+--- Exclusion Reasons ---
+Insufficient distinct timestamps (< 3): 24
+Timestamp cluster boundary dominance (mass blocked ratings): 395
+
+--- Feature Dependency Checklist ---
+Does exclusion depend on movie content, genres, ratings, or ASMR features?
+NO. Exclusion is strictly a function of the user's chronological timestamp logging behavior 
+and the density of batched interactions, not the content of the movies themselves.
+
+==================================================
+FINAL VERDICT & FREEZING
+==================================================
+A. Negligible attrition / no material evidence of selection bias
+
+PHASE 3 FROZEN ΓÇö READY FOR PHASE 4
+
+Frozen 14,581 user population hash: 7962ac4298a034acc871f236b852d67c2549f6e5cf2890d5a7127df161a0a3da
