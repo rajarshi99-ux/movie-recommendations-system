@@ -1,78 +1,85 @@
-﻿# ASMR: Adaptive Semantic Movie Recommendation System
+﻿# CineMatch — AI Movie Recommendation System
 
-<div align="center">
-  <img src="screenshots/home.png" alt="Home Page" width="800"/>
-</div>
+![CineMatch Home UI](screenshots/home.png)
+![CineMatch Recommendations](screenshots/recommendation.png)
+![CineMatch Explore](screenshots/explore.png)
+![CineMatch About](screenshots/about.png)
 
-## 📌 Overview
-This repository contains a state-of-the-art **Content-Based Movie Recommendation System** leveraging hybrid intelligence. It was engineered sequentially through extensive A/B testing frameworks, progressively optimizing its baseline heuristics using Differential Evolution constraints. 
+*A professional, decoupled full-stack movie recommendation system built with FastAPI and Vanilla JS.*
 
-Unlike traditional collaborative filtering, this system uses an **Adaptive Semantic** engine that understands the context of movies beyond simple genre matching.
+---
 
-## ✨ Features
-- **Semantic Plot Analysis:** Powered by `SentenceTransformers`, vectorizing high-dimensional plot similarities natively.
-- **Hybrid Weight Optimization:** Balances exact categorical matches (Genre) against contextual similarities (Semantic), Popularity thresholds, and Franchise heuristics.
-- **Dynamic Streamlit Interface:** A modern, dark-neon futuristic UI tailored for responsive cinematic discovery.
-- **Self-Healing TMDB Metadata:** Automatically resolves broken or missing local poster images using resilient TMDB API fallbacks.
+## 1. Project Overview
+CineMatch is a professional, high-performance content-based movie recommendation system built as a structured internship research project. It intelligently connects users to their next favorite films by analyzing large-scale semantic datasets, genres, overview text, and dynamic feature engineering to build high-accuracy correlations between movies.
 
-## 💻 Screenshots
+## 2. Updated Architecture (Frontend / Backend Split)
+The original prototype application has been safely upgraded into a professional decoupled full-stack architecture:
+- **FastAPI Backend (`/backend`)**: Handles Model inference, vectorization matching with SentenceTransformers (`all-MiniLM-L6-v2`), and robust TMDB API poster fetching. 
+- **Vanilla HTML/JS/CSS Frontend (`/frontend`)**: A standalone professional client application with elegant animations, high-performance network logic, IMDb integrations, and responsive components.
 
-### Recommendation Dashboard
-<img src="screenshots/recommendation.png" alt="Dashboard" width="800"/>
-
-### Movie Detail View
-<img src="screenshots/detail.png" alt="Detail View" width="800"/>
-
-## 🛠️ Technologies Used
-- **Python:** Primary programming language.
-- **Pandas / NumPy / SciPy:** Core ML data computation.
-- **Scikit-learn:** Meta-label binarization.
-- **SentenceTransformers (Huggingface):** Semantic embedding extraction (`all-MiniLM-L6-v2`).
-- **Streamlit:** Interactive web application rendering.
-- **TMDB API:** Dynamic content metadata retrieval.
-
-## 🚀 Setup & Installation
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/rajarshi99-ux/movie-recommendations-system.git
-cd movie-recommendations-system
+### Folder Structure
+```markdown
+📦 Movie-Recommendation-System
+ ┣ 📂 backend
+ ┃ ┣ 📂 src                  # Core algorithms (AdaptiveRecommender, SemanticModel, TMDB)
+ ┃ ┣ 📂 models               # Precomputed pickle datasets and SentenceTransformer index cache
+ ┃ ┣ 📜 main.py              # FastAPI server and decoupled endpoints
+ ┃ ┗ 📜 .env                 # Authentication API keys
+ ┣ 📂 frontend
+ ┃ ┣ 📜 index.html           # Main view with multi-page section logic
+ ┃ ┣ 📜 script.js            # Vanilla JS fetching data & mapping UI elements
+ ┃ ┗ 📜 style.css            # Dark-neon UI, hover states, glassmorphism, responsive CSS
+ ┣ 📂 screenshots            # Captured interface imagery
+ ┗ 📜 README.md              # Project documentation
 ```
 
-### 2. Create a virtual environment (Recommended)
-```bash
-python -m venv .venv
-# On Windows
-.venv\Scripts\activate
-# On Linux/Mac
-source .venv/bin/activate
-```
+## 3. Technology Stack
+- **Python 3 / FastAPI / Uvicorn** (Backend Core and Asynchronous Routing)
+- **Scikit-Learn / Pandas / SentenceTransformers** (Machine Learning Matrix Similarity Engine)
+- **Vanilla JavaScript, HTML5, CSS3** (Zero-Framework Frontend Presentation)
 
-### 3. Install dependencies
-```bash
-pip install -r requirements.txt
-```
+## 4. ASMR Research Component
+**(Adaptive Semantic Metaheuristic Recommendation)**
+CineMatch implements ongoing experimental research leveraging Differential Evolution to weight model features. Research in Phase 9 remains ongoing; the application dynamically loads evaluated matrices from offline operations without causing UI lag. Note that during early testing, Model G was found to regress against Model F on the sealed TEST evaluation.
 
-### 4. Configure Environment Variables
-You will need a TMDB API Key for dynamic poster loading. Create a `.env` file in the root directory:
+## 5. Starting the Development Servers
+In a decoupled stack, both the backend API and the frontend Web Server must be started.
+
+### Step 1: Start the Backend (FastAPI)
+```bash
+# From the root directory, ensure your python environment is activated
+pip install fastapi uvicorn requests python-dotenv numpy pandas scikit-learn sentence-transformers
+
+# Run the API server directly (auto-imports src)
+python backend/main.py
+# Or manually via uvicorn:
+python -c "import uvicorn; uvicorn.run('backend.main:app', host='0.0.0.0', port=8000)"
+```
+*The backend API mounts safely on `http://localhost:8000`.*
+
+### Step 2: Start the Frontend 
+Open a new terminal session.
+```bash
+cd frontend
+
+# Use Python's built-in simple HTTP server to serve the frontend files
+python -m http.server 8080
+```
+*Access the beautiful UI directly in your browser at `http://localhost:8080`.*
+
+## 6. Integrations & Environment Variables
+The UI features live poster fetching and IMDb direct linking. To enable TMDB posters without fallback mode, the backend requires a TMDB Key.
+Rename `backend/.env.example` to `backend/.env` and configure:
 ```env
-TMDB_API_KEY=your_tmdb_api_key_here
+TMDB_API_KEY=your_v3_api_key_here
+CINE_MODEL_MODE=semantic_hybrid
 ```
 
-### 5. Dataset Requirement
-Ensure that the `dataset/` and `movielens/` data files are present in the directory. You'll specifically need:
-- `dataset/movies_cleaned.csv`
-- Precomputed embeddings in `model/` (e.g., `movie_embeddings_v7.npy`)
+## 7. Performance Edge
+- Search String Matching (Offline Dict Search): **< 1ms**
+- Semantic Similarity Matrix Ranking (argpartition vs argsort): **< 5ms**
+- Frontend Poster DOM Parallel Hydration: Server-side threads cap TMDB fetches at 3s to guarantee responsiveness.
+- Pydantic generic object sterilization ensures FastAPI responds blazingly fast.
 
-## 🎮 Running the Application
-
-To launch the web interface, execute the following command in your terminal:
-```bash
-streamlit run app.py
-```
-This will start a local server, and you can view the application in your browser at [http://localhost:8501](http://localhost:8501).
-
-## 📊 Optimization Experiments (Phases 1-9)
-This repository includes the comprehensive research methodology used to optimize the weights of the recommendation engine. 
-* Scripts like `run_phase6_optimization.py` and `run_phase9_experiment.py` contain the strictly isolated Differential Evolution (DE) optimization constraint frameworks. 
-* Logs and markdown evaluations document the gradient convergence ensuring popularity biases are actively mitigated without destroying semantic depth.
+## 8. License
+Restricted Internal Project License. 2026.
